@@ -45,6 +45,12 @@
     <ClCompile Include="mouse.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="x_scroll_bar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="y_scroll_bar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="printer.h">
@@ -72,6 +78,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="output.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="x_scroll_bar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="y_scroll_bar.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -158,6 +158,8 @@
     <ClCompile Include="output.cpp" />
     <ClCompile Include="printer.cpp" />
     <ClCompile Include="widget.cpp" />
+    <ClCompile Include="x_scroll_bar.cpp" />
+    <ClCompile Include="y_scroll_bar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="and.h" />
@@ -169,6 +171,8 @@
     <ClInclude Include="output.h" />
     <ClInclude Include="printer.h" />
     <ClInclude Include="widget.h" />
+    <ClInclude Include="x_scroll_bar.h" />
+    <ClInclude Include="y_scroll_bar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,16 +2,16 @@
 
 printer::printer()//¹¹Ôìº¯Êı£¬¶ÁÈ¡ËùÓĞ×é¼şµÄÍ¼Ïñ
 {
-	loadimage(&andimg, _T("and.png"));//Ê¹ÓÃ¿âº¯Êı£¬¶ÁÈ¡×é¼şµÄÍ¼Ïñ
-	loadimage(&andfimg, _T("and_focused.png"));
-	loadimage(&orimg, _T("or.png"));
-	loadimage(&orfimg, _T("or_focused.png"));
-	loadimage(&notimg, _T("not.png"));
-	loadimage(&notfimg, _T("not_focused.png"));
-	loadimage(&inputimg, _T("input.png"));
-	loadimage(&inputfimg, _T("input_focused.png"));
-	loadimage(&outputimg, _T("output.png"));
-	loadimage(&outputfimg, _T("output_focused.png"));
+	loadimage(&andimg, _T("src\\and.png"));//Ê¹ÓÃ¿âº¯Êı£¬¶ÁÈ¡×é¼şµÄÍ¼Ïñ
+	loadimage(&andfimg, _T("src\\and_focused.png"));
+	loadimage(&orimg, _T("src\\or.png"));
+	loadimage(&orfimg, _T("src\\or_focused.png"));
+	loadimage(&notimg, _T("src\\not.png"));
+	loadimage(&notfimg, _T("src\\not_focused.png"));
+	loadimage(&inputimg, _T("src\\input.png"));
+	loadimage(&inputfimg, _T("src\\input_focused.png"));
+	loadimage(&outputimg, _T("src\\output.png"));
+	loadimage(&outputfimg, _T("src\\output_focused.png"));
 }
 
 void printer::print_ui()//»æÖÆ×é¼ş¿ò
@@ -28,7 +28,7 @@ void printer::print_ui()//»æÖÆ×é¼ş¿ò
 	putimage(800, 675, &outputimg);
 }
 
-void printer::print_widgets(unordered_map<int, widget*> &widgets)//»æÖÆ×é¼ş
+void printer::print_widgets(unordered_map<int, widget*> &widgets, x_scroll_bar& xs, y_scroll_bar& ys)//»æÖÆ×é¼ş
 {
 	unordered_map<int, widget*>::iterator it;
 	for (it = widgets.begin(); it != widgets.end(); it++)//±éÀúËùÓĞ×é¼ş
@@ -38,33 +38,33 @@ void printer::print_widgets(unordered_map<int, widget*> &widgets)//»æÖÆ×é¼ş
 		{
 		case 1:
 			if (it->second->isFocused())//Èç¹û×é¼ş´¦ÓÚ±»Ñ¡ÖĞ×´Ì¬
-				print_andf(it->second->get_x(), it->second->get_y());//»æÖÆ±»Ñ¡ÖĞ×´Ì¬µÄÍ¼Ïñ
+				print_andf(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());//»æÖÆ±»Ñ¡ÖĞ×´Ì¬µÄÍ¼Ïñ
 			else
-				print_and(it->second->get_x(), it->second->get_y());//·ñÔò£¬»æÖÆÎ´±»Ñ¡ÖĞ×´Ì¬µÄÍ¼Ïñ
+				print_and(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());//·ñÔò£¬»æÖÆÎ´±»Ñ¡ÖĞ×´Ì¬µÄÍ¼Ïñ
 			break;
 		case 2:
 			if (it->second->isFocused())
-				print_orf(it->second->get_x(), it->second->get_y());
+				print_orf(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			else
-				print_or(it->second->get_x(), it->second->get_y());
+				print_or(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			break;
 		case 3:
 			if (it->second->isFocused())
-				print_notf(it->second->get_x(), it->second->get_y());
+				print_notf(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			else
-				print_not(it->second->get_x(), it->second->get_y());
+				print_not(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			break;
 		case 4:
 			if (it->second->isFocused())
-				print_inputf(it->second->get_x(), it->second->get_y());
+				print_inputf(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			else
-				print_input(it->second->get_x(), it->second->get_y());
+				print_input(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			break;
 		case 5:
 			if (it->second->isFocused())
-				print_outputf(it->second->get_x(), it->second->get_y());
+				print_outputf(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			else
-				print_output(it->second->get_x(), it->second->get_y());
+				print_output(it->second->get_x() - xs.get_delta_x(), it->second->get_y() - ys.get_delta_y());
 			break;
 		default:
 			break;
@@ -122,7 +122,7 @@ void printer::print_outputf(int x, int y)//»æÖÆ±»Ñ¡ÖĞ×´Ì¬µÄÊä³ö¶Ë
 	putimage(x, y, &outputfimg);
 }
 
-void printer::print_lines(unordered_map<int, widget*>& widgets)//»æÖÆÁ¬Ïß
+void printer::print_lines(unordered_map<int, widget*>& widgets, x_scroll_bar& xs, y_scroll_bar& ys)//»æÖÆÁ¬Ïß
 {
 	unordered_map<int, widget*>::iterator it;
 	for (it = widgets.begin(); it != widgets.end(); it++)//±éÀúÃ¿¸ö×é¼ş
@@ -130,7 +130,7 @@ void printer::print_lines(unordered_map<int, widget*>& widgets)//»æÖÆÁ¬Ïß
 		for (int i = 0; i < it->second->getN(); i++)//¶ÔÓÚ¸Ã×é¼şµÄÃ¿¸öÊäÈë¹Ü½Å
 		{
 			if(it->second->getPre(i)!=-1)//Èç¹ûÓĞÁ¬½Ó¶«Î÷
-				print_line(widgets[it->second->getPre(i)]->getOutputX(), widgets[it->second->getPre(i)]->getOutputY(), it->second->getInputX(i), it->second->getInputY(i));//»æÖÆÁ¬Ïß
+				print_line(widgets[it->second->getPre(i)]->getOutputX() - xs.get_delta_x(), widgets[it->second->getPre(i)]->getOutputY() - ys.get_delta_y(), it->second->getInputX(i) - xs.get_delta_x(), it->second->getInputY(i) - ys.get_delta_y());//»æÖÆÁ¬Ïß
 		}
 	}
 }
@@ -147,7 +147,7 @@ void printer::print_line(int x1, int y1, int x2, int y2)//»æÖÆÁ½¸ö×é¼ş¼äµÄÁ¬ÏßÊ±
 	line(t, y2, x2, y2);
 }
 
-void printer::print_outputvalue(unordered_map<int, widget*>& widgets)//»æÖÆÃ¿¸ö×é¼şµÄÊä³öÖµ
+void printer::print_outputvalue(unordered_map<int, widget*>& widgets, x_scroll_bar& xs, y_scroll_bar& ys)//»æÖÆÃ¿¸ö×é¼şµÄÊä³öÖµ
 {
 	unordered_map<int, widget*>::iterator it;
 	for (it = widgets.begin(); it != widgets.end(); it++)//±éÀúÃ¿¸ö×é¼ş
@@ -156,9 +156,9 @@ void printer::print_outputvalue(unordered_map<int, widget*>& widgets)//»æÖÆÃ¿¸ö×
 		if (it->second->getOutputValue(widgets) != -1)//Èç¹û¸Ã×é¼şµÄÓĞÊä³öÖµ
 		{
 			char v = it->second->getOutputValue(widgets) + '0';//Êä³öÖµ×ªÎªcharÀàĞÍ
-			outtextxy(it->second->getOutputX(), it->second->getOutputY() - 20, v);//µ÷ÓÃ¿âµÄº¯Êı£¬»æÖÆÊä³öÖµ
+			outtextxy(it->second->getOutputX() - xs.get_delta_x(), it->second->getOutputY() - 20 - ys.get_delta_y(), v);//µ÷ÓÃ¿âµÄº¯Êı£¬»æÖÆÊä³öÖµ
 		}
 		else
-			outtextxy(it->second->getOutputX(), it->second->getOutputY() - 20, '-');//Ã»ÓĞÊä³öÖµ£¬µ÷ÓÃ¿âµÄº¯Êı»æÖÆÒ»¸ö¡°-¡±ºÅ
+			outtextxy(it->second->getOutputX() - xs.get_delta_x(), it->second->getOutputY() - 20 - ys.get_delta_y(), '-');//Ã»ÓĞÊä³öÖµ£¬µ÷ÓÃ¿âµÄº¯Êı»æÖÆÒ»¸ö¡°-¡±ºÅ
 	}
 }
